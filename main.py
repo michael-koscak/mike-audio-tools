@@ -106,26 +106,12 @@ def main():
             
             if audio_path:
                 print(f"{Fore.GREEN}Song downloaded successfully to {audio_path}{Style.RESET_ALL}")
-                
-                # Modified: Store the last processed audio file path so we don't need to ask for it again
-                last_processed_audio = audio_path
-                
-                # Then automatically proceed to split the stems without asking
-                proceed = True
-                while proceed:
-                    # Split the stems using the saved audio path
-                    output_dir = stem_splitter.split_stems(last_processed_audio)
-                    
-                    if output_dir:
-                        print(f"{Fore.GREEN}Stems split successfully to {output_dir}{Style.RESET_ALL}")
-                        
-                        # Ask if user wants to extract another stem
-                        another = input(f"{Fore.YELLOW}Would you like to extract another stem? (y/n): {Style.RESET_ALL}").lower()
-                        if another != 'y' and another != 'yes':
-                            proceed = False
-                    else:
-                        print(f"{Fore.RED}Failed to split stems.{Style.RESET_ALL}")
-                        proceed = False
+
+                output_dir = stem_splitter.split_stems(audio_path)
+                if output_dir:
+                    print(f"{Fore.GREEN}Stems split successfully to {output_dir}{Style.RESET_ALL}")
+                else:
+                    print(f"{Fore.RED}Failed to split stems.{Style.RESET_ALL}")
             else:
                 print(f"{Fore.RED}Failed to download song.{Style.RESET_ALL}")
             
